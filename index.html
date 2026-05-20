@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Khon Kaen Transit Game</title>
+    <title>Khon Kaen Transit Venture</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Itim&display=swap" rel="stylesheet">
@@ -69,22 +69,22 @@
             transform: translateX(100%);
         }
 
-        /* --- หน้าเมนูหลัก --- */
+        /* --- หน้าเมนูหลัก (Icon Menu Grid) --- */
         .title-container {
             text-align: center;
-            margin-top: 50px;
+            margin-top: 30px;
         }
         h1 {
-            font-size: 3.5rem;
+            font-size: 3.2rem;
             color: #FF5757;
             text-shadow: 4px 4px 0px #000;
             -webkit-text-stroke: 2px #000;
-            letter-spacing: 2px;
+            letter-spacing: 1px;
         }
         .subtitle {
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             color: #4A4A4A;
-            margin-top: 10px;
+            margin-top: 8px;
             font-weight: bold;
             background: #FFF380;
             padding: 5px 15px;
@@ -92,58 +92,84 @@
             border: 2px solid #000;
         }
 
+        .menu-instruction {
+            margin-top: 30px;
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #555;
+        }
+
         .menu-grid {
             display: grid;
-            grid-template-columns: 1fr;
-            gap: 20px;
+            grid-template-columns: 1fr 1fr; /* แบ่งเป็น 2 คอลัมน์ซ้ายขวา */
+            gap: 15px;
             width: 100%;
-            margin-top: 60px;
+            margin-top: 15px;
         }
 
         .menu-icon-btn {
-            background: var(--secondary-color);
             border: 4px solid #000;
             border-radius: 20px;
-            padding: 25px;
+            padding: 20px 10px;
             text-align: center;
             cursor: pointer;
             box-shadow: 0 8px 0px #000;
             transition: all 0.1s ease;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 20px;
+            gap: 10px;
         }
         .menu-icon-btn:active {
             transform: translateY(8px);
             box-shadow: 0 0px 0px #000;
         }
         .menu-icon-btn i {
-            font-size: 3rem;
+            font-size: 3.5rem;
             color: white;
             text-shadow: 3px 3px 0px #000;
         }
         .menu-icon-btn span {
-            font-size: 1.8rem;
+            font-size: 1.3rem;
             color: white;
             font-weight: bold;
             text-shadow: 2px 2px 0px #000;
+            line-height: 1.2;
         }
-        .menu-icon-btn.btn-orange { background-color: #FF9100; }
+        .btn-orange { background-color: #FF9100; }
+        .btn-purple { background-color: #9C27B0; }
 
         /* --- หน้าเล่นเกม --- */
+        #game-title-banner {
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: #FFF6BF;
+            padding: 5px 15px;
+            border: 3px solid #000;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            width: 100%;
+            text-align: center;
+        }
+
         #game-area {
             width: 100%;
             flex-grow: 1;
-            background: #E8F5E9;
             border: 4px solid #000;
             border-radius: 20px;
             position: relative;
             overflow: hidden;
-            /* ใช้ภาพพื้นหลังถนนการ์ตูนฟรีจากเว็บ */
-            background-image: url('https://img.freepik.com/free-vector/aerial-view-empty-road-background_1308-25199.jpg');
             background-size: cover;
             background-position: center;
+        }
+
+        /* คลาสเปลี่ยนพื้นหลังตามเกมที่เลือก */
+        .bg-bus-game {
+            background-image: url('https://img.freepik.com/free-vector/aerial-view-empty-road-background_1308-25199.jpg');
+        }
+        .bg-lrt-game {
+            background-image: url('https://img.freepik.com/free-vector/city-road-with-railway-aerial-view_1308-31627.jpg');
         }
 
         .hud {
@@ -156,11 +182,10 @@
             background: #000;
             color: #fff;
             border-radius: 14px;
-            margin-bottom: 15px;
-            box-shadow: 0 4px 0px rgba(0,0,0,0.2);
+            margin-bottom: 10px;
         }
 
-        /* ปุ่มรถต่างๆ ที่จะสุ่มโผล่ขึ้นมาให้เด็กๆ แตะ */
+        /* วงกลมสุ่มโผล่ให้แตะ */
         .spawn-element {
             position: absolute;
             width: 85px;
@@ -175,9 +200,6 @@
             box-shadow: 0 6px 0px #000;
             animation: popIn 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        .spawn-element:active {
-            transform: translate(-50%, -50%) scale(0.9);
-        }
         @keyframes popIn {
             0% { transform: translate(-50%, -50%) scale(0); }
             100% { transform: translate(-50%, -50%) scale(1); }
@@ -185,7 +207,7 @@
 
         /* --- ปุ่มสไตล์อาเขตส่วนกลาง --- */
         .btn-global {
-            margin-top: 20px;
+            margin-top: 15px;
             background: var(--primary-color);
             color: white;
             border: 4px solid #000;
@@ -216,16 +238,27 @@
             overflow-y: auto;
         }
         .score-row {
-            display: flex;
-            justify-content: space-between;
             background: #fff;
-            padding: 12px 20px;
+            padding: 12px 15px;
             border: 3px solid #000;
             border-radius: 12px;
             margin-bottom: 10px;
-            font-size: 1.4rem;
+            font-size: 1.2rem;
             font-weight: bold;
             box-shadow: 0 4px 0px rgba(0,0,0,0.1);
+        }
+        .score-row-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+        .game-tag {
+            font-size: 0.9rem;
+            background: #E0F7FA;
+            color: #006064;
+            padding: 2px 8px;
+            border-radius: 10px;
+            border: 1px solid #000;
         }
     </style>
 </head>
@@ -236,22 +269,29 @@
         <div id="screen-menu" class="screen">
             <div class="title-container">
                 <h1>KK-Transit</h1>
-                <div class="subtitle">วัยรุ่นขอนแก่น แตะโบกรถสาธารณะ!</div>
+                <div class="subtitle">ตะลุยระบบขนส่งเมืองขอนแก่น!</div>
             </div>
 
+            <div class="menu-instruction">👇 เลือกเกมส์ที่ต้องการเล่นได้เลยวายรุ่น!</div>
+
             <div class="menu-grid">
-                <div class="menu-icon-btn btn-orange" onclick="startGame()">
-                    <i class="fa-solid fa-gamepad"></i>
-                    <span>เริ่มตะลุยเมืองขอนแก่น</span>
+                <div class="menu-icon-btn btn-orange" onclick="startGame('bus')">
+                    <i class="fa-solid fa-bus"></i>
+                    <span>1. โบกรถซิ่ง<br>ขอนแก่น</span>
+                </div>
+                <div class="menu-icon-btn btn-purple" onclick="startGame('lrt')">
+                    <i class="fa-solid fa-train-tram"></i>
+                    <span>2. เคลียร์ทาง<br>รถไฟฟ้า LRT</span>
                 </div>
             </div>
 
-            <button class="btn-global" style="background: var(--secondary-color); margin-top: 60px;" onclick="showLeaderboard()">
-                <i class="fa-solid fa-trophy"></i> ดูอันดับเด็กเทพ
+            <button class="btn-global" style="background: var(--secondary-color); margin-top: 50px;" onclick="showLeaderboard()">
+                <i class="fa-solid fa-trophy"></i> ดูอันดับเด็กเทพทั้งหมด
             </button>
         </div>
 
         <div id="screen-game" class="screen hidden">
+            <div id="game-title-banner">ชื่อเกมส์</div>
             <div class="hud">
                 <span id="score-txt">คะแนน: 0</span>
                 <span id="timer-txt">เวลา: 30</span>
@@ -260,11 +300,11 @@
             <div id="game-area">
                 </div>
 
-            <button class="btn-global" onclick="goBackToMenu()">ยอมแพ้/กลับหน้าหลัก</button>
+            <button class="btn-global" onclick="goBackToMenu()">ยอมแพ้กลับหน้าหลัก</button>
         </div>
 
         <div id="screen-leaderboard" class="screen hidden">
-            <h2 style="font-size: 2.3rem; color: #FF5757; text-shadow: 2px 2px 0px #000; -webkit-text-stroke: 1px #000;">🏆 5 อันดับสูงสุด</h2>
+            <h2 style="font-size: 2.3rem; color: #FF5757; text-shadow: 2px 2px 0px #000; -webkit-text-stroke: 1px #000;">🏆 ทำเนียบเด็กเทพ</h2>
             
             <div class="leaderboard-box">
                 <div id="leaderboard-list">
@@ -296,20 +336,38 @@
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
 
+        let currentGameMode = ''; // 'bus' หรือ 'lrt'
         let score = 0;
         let timeLeft = 30;
         let gameInterval;
         let spawnInterval;
 
-        // เริ่มต้นเกมส์
-        window.startGame = function() {
+        // ฟังก์ชันเริ่มเกมส์ (สลับระบบตามปุ่มที่กดเลือกเข้ามา)
+        window.startGame = function(mode) {
+            currentGameMode = mode;
             switchScreen('screen-game');
+            
             score = 0;
             timeLeft = 30;
             document.getElementById('score-txt').innerText = `คะแนน: ${score}`;
             document.getElementById('timer-txt').innerText = `เวลา: ${timeLeft}`;
             
-            // ตัวนับเวลาถอยหลัง 30 วินาที
+            const gameArea = document.getElementById('game-area');
+            const titleBanner = document.getElementById('game-title-banner');
+            
+            // รีเซ็ตคลาสพื้นหลังถนนเดิมออกก่อน
+            gameArea.classList.remove('bg-bus-game', 'bg-lrt-game');
+
+            // ตั้งค่าหน้าตาและพื้นหลังตามโหมดเกมส์
+            if (currentGameMode === 'bus') {
+                titleBanner.innerText = "🚌 เกมโบกรถซิ่ง (แตะรถบัส/สองแถว)";
+                gameArea.classList.add('bg-bus-game');
+            } else if (currentGameMode === 'lrt') {
+                titleBanner.innerText = "🚧 เกมเคลียร์ทางราง LRT (แตะทำลายสิ่งกีดขวาง)";
+                gameArea.classList.add('bg-lrt-game');
+            }
+            
+            // จับเวลาถอยหลัง 30 วินาที
             gameInterval = setInterval(() => {
                 timeLeft--;
                 document.getElementById('timer-txt').innerText = `เวลา: ${timeLeft}`;
@@ -318,11 +376,11 @@
                 }
             }, 1000);
 
-            // สุ่มรถโผล่ขึ้นมาบนหน้าจอทุกๆ 0.7 วินาที (ท้าทายความเร็ววัยรุ่น)
+            // สุ่มไอคอนโผล่ความเร็วตามโหมดเกมส์
             spawnInterval = setInterval(spawnObject, 700);
         }
 
-        // ฟังก์ชันสุ่มไอคอนรถรูปแบบต่างๆ ออกมาบนเว็บ
+        // ฟังก์ชันการสุ่มสร้างวัตถุตามกติกาของแต่ละเกมส์
         function spawnObject() {
             const gameArea = document.getElementById('game-area');
             const element = document.createElement('div');
@@ -330,30 +388,41 @@
 
             const rand = Math.random();
             
-            if (rand < 0.35) {
-                // 1. Khon Kaen Smart Bus (สีฟ้าสดใส) -> ช่วยลดรถติด
-                element.style.backgroundColor = "#00C2FF"; 
-                element.innerHTML = `<i class="fa-solid fa-bus" style="font-size: 2.5rem; color: #fff;"></i>`;
-                element.dataset.type = "good";
-            } else if (rand < 0.70) {
-                // 2. รถสองแถวขอนแก่นสาย 8 / สายอื่นๆ (สีเขียวเหนี่ยวทรัพย์) -> ขนส่งมวลชนคู่เมือง
-                element.style.backgroundColor = "#00E676";
-                element.innerHTML = `<i class="fa-solid fa-van-shuttle" style="font-size: 2.5rem; color: #fff;"></i>`;
-                element.dataset.type = "good";
-            } else {
-                // 3. รถยนต์ส่วนบุคคล (สีแดงตัวร้าย) -> ขับมาคนเดียวทำรถติดในเมือง!
-                element.style.backgroundColor = "#FF5757";
-                element.innerHTML = `<i class="fa-solid fa-car" style="font-size: 2.5rem; color: #fff;"></i>`;
-                element.dataset.type = "bad";
+            if (currentGameMode === 'bus') {
+                // --- กติกาเกมส์ที่ 1: โบกรถซิ่ง ---
+                if (rand < 0.35) {
+                    element.style.backgroundColor = "#00C2FF"; // Smart Bus ฟ้า
+                    element.innerHTML = `<i class="fa-solid fa-bus" style="font-size: 2.5rem; color: #fff;"></i>`;
+                    element.dataset.type = "good_bus";
+                } else if (rand < 0.70) {
+                    element.style.backgroundColor = "#00E676"; // สองแถวเขียว
+                    element.innerHTML = `<i class="fa-solid fa-van-shuttle" style="font-size: 2.5rem; color: #fff;"></i>`;
+                    element.dataset.type = "good_bus";
+                } else {
+                    element.style.backgroundColor = "#FF5757"; // รถส่วนตัวทำรถติด
+                    element.innerHTML = `<i class="fa-solid fa-car" style="font-size: 2.5rem; color: #fff;"></i>`;
+                    element.dataset.type = "bad_car";
+                }
+            } else if (currentGameMode === 'lrt') {
+                // --- กติกาเกมส์ที่ 2: เคลียร์ทาง LRT ---
+                if (rand < 0.50) {
+                    element.style.backgroundColor = "#FF9100"; // กรวยจราจรขวางทางรถไฟ
+                    element.innerHTML = `<i class="fa-solid fa-triangle-exclamation" style="font-size: 2.5rem; color: #fff;"></i>`;
+                    element.dataset.type = "obstacle";
+                } else {
+                    element.style.backgroundColor = "#D32F2F"; // รถยนต์ส่วนตัวมาจอดล้ำเส้นรางรถไฟ
+                    element.innerHTML = `<i class="fa-solid fa-car-burst" style="font-size: 2.5rem; color: #fff;"></i>`;
+                    element.dataset.type = "obstacle";
+                }
             }
 
-            // สุ่มตำแหน่งพิกัด X, Y ไม่ให้ล้นขอบจอเกมส์
+            // สุ่มพิกัดบนหน้าจอ
             const x = Math.random() * (gameArea.clientWidth - 90) + 45;
             const y = Math.random() * (gameArea.clientHeight - 90) + 45;
             element.style.left = `${x}px`;
             element.style.top = `${y}px`;
 
-            // รองรับทั้งระบบสัมผัส (Touch) บนมือถือ และการคลิกเมาส์บนคอมพิวเตอร์
+            // ตรวจจับการสัมผัสรวดเร็ว
             element.addEventListener('touchstart', (e) => {
                 e.preventDefault();
                 handleTap(element);
@@ -362,52 +431,65 @@
 
             gameArea.appendChild(element);
 
-            // ถ้าน้องๆ แตะไม่ทันภายใน 1 วินาที รถจะขับหายไปเอง
+            // ถ้านักเล่นเกมส์แตะไม่ทันในเวลาที่กำหนด วัตถุจะหายไปเอง
             setTimeout(() => {
                 if(element.parentNode) {
+                    // เฉพาะเกม LRT: ถ้าเคลียร์สิ่งกีดขวางไม่ทัน รถไฟดีเลย์ คะแนนจะถูกหัก!
+                    if (currentGameMode === 'lrt' && element.dataset.type === "obstacle") {
+                        score -= 10;
+                        document.getElementById('score-txt').innerText = `คะแนน: ${score}`;
+                    }
                     element.remove();
                 }
-            }, 1000);
+            }, 1100);
         }
 
-        // ฟังก์ชันคำนวณคะแนนจากการแตะสัมผัส
+        // ฟังก์ชันคิดคะแนนเมื่อมีการ "แตะสัมผัส" โดนวัตถุ
         function handleTap(element) {
-            if(element.dataset.type === "good") {
-                score += 10; // สนับสนุนรถสาธารณะ ได้คะแนน!
-            } else {
-                score -= 15; // กดโดนรถส่วนตัว โดนหักคะแนน!
+            if (currentGameMode === 'bus') {
+                if(element.dataset.type === "good_bus") {
+                    score += 10; // โบกถูกคัน ได้แต้ม
+                } else {
+                    score -= 15; // โบกผิดคัน รถส่วนตัวทำรถติด เสียแต้ม
+                }
+            } else if (currentGameMode === 'lrt') {
+                if(element.dataset.type === "obstacle") {
+                    score += 10; // แตะทำลายสิ่งกีดขวางสำเร็จ ได้แต้ม!
+                }
             }
             document.getElementById('score-txt').innerText = `คะแนน: ${score}`;
             element.remove();
         }
 
-        // เมื่อหมดเวลา บันทึกคะแนนลง Firebase
+        // จบเกมส์ บันทึกสถิติลงฐานข้อมูล Firebase
         function endGame() {
             clearInterval(gameInterval);
             clearInterval(spawnInterval);
             document.getElementById('game-area').innerHTML = '';
             
-            const name = prompt(`🎉 หมดเวลาแล้วจ้า! นายทำคะแนนได้: ${score} คะแนน\nกรุณาใส่ชื่อเล่นเพื่อบันทึกในตารางเด็กเทพขอนแก่น:`) || "ผู้เล่นนิรนาม";
+            let gameNameTH = currentGameMode === 'bus' ? "เกมโบกรถซิ่ง" : "เกมเคลียร์ทาง LRT";
+            const name = prompt(`🎉 จบการแข่งขันคุณทำได้: ${score} คะแนน\nกรุณาใส่ชื่อเล่นเพื่อบันทึกทำเนียบเด็กเทพขอนแก่น:`) || "ผู้เล่นนิรนาม";
             
             const scoresRef = ref(db, 'leaderboard');
             const newScoreRef = push(scoresRef);
             set(newScoreRef, {
                 username: name,
                 score: score,
+                gameMode: gameNameTH, // บันทึกไว้ด้วยว่าได้แต้มมาจากเกมส์ไหน
                 timestamp: Date.now()
             }).then(() => {
-                showLeaderboard(); // บันทึกเสร็จแล้วเปิดหน้าดูคะแนนรวมทันที
+                showLeaderboard();
             }).catch((error) => {
                 console.error("Firebase Error: ", error);
                 switchScreen('screen-menu');
             });
         }
 
-        // ดึงข้อมูลอันดับจาก Realtime Database ของคุณสุชาติมาโชว์
+        // ดึงข้อมูลอันดับเด็กเทพจาก Firebase มาแสดงผลรวมกัน
         window.showLeaderboard = function() {
             switchScreen('screen-leaderboard');
             const listDiv = document.getElementById('leaderboard-list');
-            listDiv.innerHTML = "กำลังดึงข้อมูลจากฐานข้อมูล Firebase...";
+            listDiv.innerHTML = "กำลังดึงข้อมูลอันดับจากระบบ Firebase...";
 
             const leaderboardRef = query(ref(db, 'leaderboard'), orderByChild('score'), limitToLast(5));
             
@@ -417,18 +499,21 @@
                 snapshot.forEach((childSnapshot) => {
                     data.push(childSnapshot.val());
                 });
-                data.reverse(); // เรียงคะแนนจากมากไปหาน้อย
+                data.reverse(); 
 
                 if(data.length === 0) {
-                    listDiv.innerHTML = "<p style='text-align:center;font-size:1.3rem;'>ยังไม่มีสถิติถูกบันทึก ประเดิมเป็นคนแรกเลย!</p>";
+                    listDiv.innerHTML = "<p style='text-align:center;'>ยังไม่มีคะแนนบันทึกในระบบ มาเป็นคนแรกเลย!</p>";
                     return;
                 }
 
                 data.forEach((user, index) => {
                     listDiv.innerHTML += `
                         <div class="score-row">
-                            <span>🏅 อันดับ ${index+1} : ${user.username}</span>
-                            <span style="color:var(--primary-color);">${user.score} แต้ม</span>
+                            <div class="score-row-header">
+                                <span>🏅 อันดับ ${index+1} : ${user.username}</span>
+                                <span style="color:var(--primary-color);">${user.score} แต้ม</span>
+                            </div>
+                            <div><span class="game-tag">🕹️ ${user.gameMode || 'เกมโบกรถซิ่ง'}</span></div>
                         </div>
                     `;
                 });
